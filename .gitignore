@@ -1,0 +1,13 @@
+# Local environment variables
+.env
+.env.*
+!.env.example
+
+# Python cache and local virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Files uploaded while running the backend locally
+/backend/uploads/
