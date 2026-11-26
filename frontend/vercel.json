@@ -5,6 +5,10 @@
       "destination": "https://musicapptraining-backend.onrender.com/api/:path*"
     },
     {
+      "source": "/uploads/:path*",
+      "destination": "https://musicapptraining-backend.onrender.com/uploads/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
