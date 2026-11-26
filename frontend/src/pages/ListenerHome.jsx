@@ -17,7 +17,7 @@ export default function ListenerHome() {
 
     const fetchSongs = async () => {
       try {
-        const res = await secureFetch("/api/songs/", {
+        const res = await secureFetch("/api/songs", {
           method: "GET",
         });
         const data = await res.json();
