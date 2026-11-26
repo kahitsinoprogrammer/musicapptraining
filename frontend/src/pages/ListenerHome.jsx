@@ -17,7 +17,7 @@ export default function ListenerHome() {
 
     const fetchSongs = async () => {
       try {
-        const res = await secureFetch("http://localhost:3000/api/songs/", {
+        const res = await secureFetch("/api/songs/", {
           method: "GET",
         });
         const data = await res.json();
@@ -76,8 +76,6 @@ export default function ListenerHome() {
           ))}
         </div>
       )}
-
-
     </div>
   );
 }

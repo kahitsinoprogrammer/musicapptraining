@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { useAuth } from "../auth/AuthProvider";
 
-
 export default function EventImport({ onImported }) {
   const { secureFetch } = useAuth();
   const [busy, setBusy] = useState(false);
@@ -69,18 +68,13 @@ export default function EventImport({ onImported }) {
         description: String(row[4] || ""),
       }));
 
-   
-
-      const response = await secureFetch(
-        "http://localhost:3000/api/events/import",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ events }),
+      const response = await secureFetch("/api/events/import", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({ events }),
+      });
 
       const result = await response.json();
       if (!response.ok)

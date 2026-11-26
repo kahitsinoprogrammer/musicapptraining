@@ -12,12 +12,9 @@ export default function ArtistDashboard() {
 
     const fetchSongs = async () => {
       try {
-        const res = await secureFetch(
-          `http://localhost:3000/api/songs/artist-songs`,
-          {
-            method: "GET",
-          },
-        );
+        const res = await secureFetch(`/api/songs/artist-songs`, {
+          method: "GET",
+        });
 
         const data = await res.json();
 

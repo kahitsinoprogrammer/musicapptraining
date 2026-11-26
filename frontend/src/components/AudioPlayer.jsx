@@ -13,7 +13,7 @@ export default function WaveformPlayer({ src, title, songID }) {
 
   const incrementPlayCount = async () => {
     try {
-      await secureFetch(`http://localhost:3000/api/songs/${songID}/play`, {
+      await secureFetch(`/api/songs/${songID}/play`, {
         method: "PATCH",
       });
     } catch (err) {
@@ -34,7 +34,7 @@ export default function WaveformPlayer({ src, title, songID }) {
       },
     });
 
-    wavesurferRef.current.load(`http://localhost:3000${src}`);
+    wavesurferRef.current.load(`${src}`);
     wavesurferRef.current.on("ready", () => {
       setDuration(wavesurferRef.current.getDuration());
     });

@@ -10,9 +10,7 @@ export default function Summary() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const res = await secureFetch(
-        "http://localhost:3000/api/songs/artist-songs",
-      );
+      const res = await secureFetch("/api/songs/artist-songs");
       const data = await res.json();
       setSongs(data.songs);
     };
@@ -43,99 +41,97 @@ export default function Summary() {
     });
   };
 
-    const handleExcelDownload = () => {
-      const worksheetData = songs.map((song) => ({
-        Title: song.title,
-        "Play Count": song.play_count,
-        Thumbnail: `http://localhost:3000${song.thumbnail}`,
-      }));
+  const handleExcelDownload = () => {
+    const worksheetData = songs.map((song) => ({
+      Title: song.title,
+      "Play Count": song.play_count,
+      Thumbnail: `${song.thumbnail}`,
+    }));
 
-      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Songs");
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Songs");
 
-      XLSX.writeFile(workbook, "songs.xlsx");
-    };
+    XLSX.writeFile(workbook, "songs.xlsx");
+  };
 
+  return (
+    <div style={{ padding: "16px", fontFamily: "Arial, sans-serif" }}>
+      <h2
+        style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "16px" }}
+      >
+        Song List Preview
+      </h2>
 
-    return (
-      <div style={{ padding: "16px", fontFamily: "Arial, sans-serif" }}>
-        <h2
-          style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "16px" }}
+      <div ref={tableRef}>
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            border: "1px solid #ccc",
+          }}
         >
-          Song List Preview
-        </h2>
-
-        <div ref={tableRef}>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              border: "1px solid #ccc",
-            }}
-          >
-            <thead style={{ backgroundColor: "#f3f3f3" }}>
-              <tr>
-                <th style={cellStyle}>Thumbnail</th>
-                <th style={cellStyle}>Title</th>
-                <th style={cellStyle}>Play Count</th>
+          <thead style={{ backgroundColor: "#f3f3f3" }}>
+            <tr>
+              <th style={cellStyle}>Thumbnail</th>
+              <th style={cellStyle}>Title</th>
+              <th style={cellStyle}>Play Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {songs.map((song) => (
+              <tr key={song.id}>
+                <td style={cellStyle}>
+                  <img
+                    src={`${song.thumbnail}`}
+                    alt="thumb"
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </td>
+                <td style={cellStyle}>{song.title}</td>
+                <td style={cellStyle}>{song.play_count}</td>
               </tr>
-            </thead>
-            <tbody>
-              {songs.map((song) => (
-                <tr key={song.id}>
-                  <td style={cellStyle}>
-                    <img
-                      src={`http://localhost:3000${song.thumbnail}`}
-                      alt="thumb"
-                      style={{
-                        width: "48px",
-                        height: "48px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </td>
-                  <td style={cellStyle}>{song.title}</td>
-                  <td style={cellStyle}>{song.play_count}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div style={{ marginTop: "16px", display: "flex", gap: "12px" }}>
-          <button
-            onClick={handlePDFDownload}
-            style={{
-              padding: "10px 16px",
-              backgroundColor: "#2563eb",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              fontWeight: "bold",
-              cursor: "pointer",
-            }}
-          >
-            Download as PDF
-          </button>
-          <button
-            onClick={handleExcelDownload}
-            style={{
-              padding: "10px 16px",
-              backgroundColor: "#059669", // green-600
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              fontWeight: "bold",
-              cursor: "pointer",
-            }}
-          >
-            Download as Excel
-          </button>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
-    );
 
+      <div style={{ marginTop: "16px", display: "flex", gap: "12px" }}>
+        <button
+          onClick={handlePDFDownload}
+          style={{
+            padding: "10px 16px",
+            backgroundColor: "#2563eb",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Download as PDF
+        </button>
+        <button
+          onClick={handleExcelDownload}
+          style={{
+            padding: "10px 16px",
+            backgroundColor: "#059669", // green-600
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Download as Excel
+        </button>
+      </div>
+    </div>
+  );
 }
 
 const cellStyle = {

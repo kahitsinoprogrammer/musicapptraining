@@ -7,8 +7,6 @@ export default function Register() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-
-
   const location = useLocation();
   const [error, setError] = useState("");
   const [message, setMessage] = useState(() => location.state?.message || "");
@@ -29,7 +27,7 @@ export default function Register() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -56,14 +54,11 @@ export default function Register() {
     setMessage("");
 
     try {
-      const res = await fetch(
-        "http://localhost:3000/api/auth/verify-registration",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: verificationEmail, otp }),
-        },
-      );
+      const res = await fetch("/api/auth/verify-registration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: verificationEmail, otp }),
+      });
       const result = await res.json();
 
       if (!res.ok) {
@@ -76,7 +71,6 @@ export default function Register() {
       }
 
       login(token);
-
 
       const decoded = JSON.parse(atob(token.split(".")[1]));
 

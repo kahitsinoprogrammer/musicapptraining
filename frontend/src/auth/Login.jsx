@@ -18,7 +18,7 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default function Login() {
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-800 shadow-md rounded">
       <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
- 
+
       {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -100,4 +100,3 @@ export default function Login() {
     </div>
   );
 }
-

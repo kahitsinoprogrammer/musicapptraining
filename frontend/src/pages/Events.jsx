@@ -29,7 +29,7 @@ export default function Events() {
     const load = async () => {
       try {
         const response = await secureFetch(
-          `http://localhost:3000/api/events${isArtist ? "/artist-events" : ""}`,
+          `/api/events${isArtist ? "/artist-events" : ""}`,
           { method: "GET" },
         );
         const data = await response.json();
@@ -57,7 +57,7 @@ export default function Events() {
     setSaving(true);
 
     try {
-      const response = await secureFetch("http://localhost:3000/api/events", {
+      const response = await secureFetch("/api/events", {
         method: "POST",
         body: data,
       });
@@ -177,8 +177,7 @@ export default function Events() {
           </fieldset>
         </form>
       )}
-      
-      
+
       {loading ? (
         <p>Loading events...</p>
       ) : listError ? (
@@ -206,7 +205,7 @@ export default function Events() {
             >
               {event.poster_url ? (
                 <img
-                  src={`http://localhost:3000${event.poster_url}`}
+                  src={`${event.poster_url}`}
                   alt={`Poster for ${event.title}`}
                   className="w-full h-72 object-contain"
                   loading="lazy"
